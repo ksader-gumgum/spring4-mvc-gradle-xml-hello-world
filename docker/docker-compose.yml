@@ -1,0 +1,20 @@
+services:
+  tomcat-weaver:
+      build:
+        context: ../
+        dockerfile: ./docker/java/Dockerfile.local
+      dns:
+        - 172.30.0.2
+        - 8.8.8.8
+      expose:
+        - 8080
+        - 29001
+      ports:
+        - 8080:8080
+        - 8443:8443
+        - 5353:5353
+        - 29001:29001
+      volumes:
+        - ~/.aws:/root/.aws
+      environment:
+        - CATALINA_OPTS=-Xdebug -javaagent:/usr/local/tomcat/lib/spring-instrument-4.3.3.RELEASE.jar  -agentlib:jdwp=transport=dt_socket,address=5353,server=y,suspend=n
